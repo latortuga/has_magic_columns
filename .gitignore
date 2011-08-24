@@ -1,2 +1,4 @@
 ftags
 .rvmrc
+Gemfile.lock
+.bundle
