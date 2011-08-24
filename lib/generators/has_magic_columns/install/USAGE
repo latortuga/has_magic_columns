@@ -1,0 +1,8 @@
+Description:
+    Add a migration for has_magic_columns.
+
+Example:
+    rails generate has_magic_columns:install
+
+    This will create:
+        db/migrate/XXX_add_has_magic_columns_tables.rb
