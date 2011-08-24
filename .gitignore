@@ -3,3 +3,4 @@ ftags
 Gemfile.lock
 .bundle
 rdoc/
+pkg/
