@@ -2,3 +2,4 @@ ftags
 .rvmrc
 Gemfile.lock
 .bundle
+rdoc/
