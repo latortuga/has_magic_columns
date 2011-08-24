@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 25
+/svn/!svn/ver/3/trunk/lib
+END
+magic_column.rb
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2/trunk/lib/magic_column.rb
+END
+magic_column_relationship.rb
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2/trunk/lib/magic_column_relationship.rb
+END
+magic_attribute.rb
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/2/trunk/lib/magic_attribute.rb
+END
+magic_attribute_relationship.rb
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/lib/magic_attribute_relationship.rb
+END
+magic_option.rb
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2/trunk/lib/magic_option.rb
+END
