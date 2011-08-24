@@ -1,3 +1,7 @@
+require 'has_magic_columns/has_magic_columns'
+require 'has_magic_columns/version'
+require 'has_magic_columns/railtie' if defined?(Rails)
+
 # Has Magic Columns
 #
 # Copyright (c) 2007 Brandon Keene <bkeene AT gmail DOT com>
