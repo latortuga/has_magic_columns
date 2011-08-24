@@ -1,87 +1,92 @@
-HasMagicColumns
+has_magic_columns
 ===============
 
-Allows the addition of "magic" columns and attributes on a per model basis.
+Allows the addition of custom "magic" columns and attributes on a per-model
+or per-parent-model basis. This is useful for situations where custom fields are
+required for a specific model or for multi-user, multi-account environments where
+accounts can customize attributes for subordinate models.
+
+NOTE: This plugin is in a transitional state. It was originally a Rails 2
+plugin written by Brandon Keene and is being update to a gem with Rails 3
+support.
 
 Installation
 ============
 
-You need to create table definitions for MagicColumns.
+Add to your Gemfile:
 
-Generate the migration using the included task:
+    gem "has_magic_columns"
 
-  rake has_magic_columns:db:create
+Create the migrations for MagicColumns and migrate:
+
+    rake has_magic_columns:db:create
+    rake db:migrate
   
-Run the standard migrate task to update your schema:
+Usage
+=====
 
-  rake db:migrate
-  
-You're ready to start using HasMagicColumns!
+Add has_magic_columns to your model of choice.
 
-Example
-=======
-class Person < ActiveRecord::Base
-  has_magic_columns
-end
+    class User < ActiveRecord::Base
+      has_magic_columns
+    end
 
-# Create a Person
-@bob = Person.create(:email => "bob@example.com")
+Add magic columns to your model
 
-# Add some MagicColumns
-@bob.magic_columns << MagicColumn.create(:name => "first_name")
-@bob.magic_columns << MagicColumn.create(:name => "last_name")
-@bob.magic_columns << MagicColumn.create(:name => "birthday", :datatype => "date")
+    @bob = User.create(:email => "bob@example.com")
+    @bob.magic_columns << MagicColumn.create(:name => "first_name")
+    @bob.magic_columns << MagicColumn.create(:name => "last_name")
+    @bob.magic_columns << MagicColumn.create(:name => "birthday", :datatype => "date")
+    
+Give @bob some magic...
 
-# Give @bob some magic...
-@bob.first_name = "Bob"
-@bob.last_name = "Magic!"
-@bob.birthday = Date.today
+    @bob.first_name = "Bob"
+    @bob.last_name = "Magic!"
+    @bob.birthday = Date.today
+    @bob.save
 
-# Save @bob like normal
-@bob.save
+Find @bob and inspect him
 
-# Find @bob and inspect him
-@bob = Person.find(@bob.id)
-@bob.first_name	#=> "Bob"
-@bob.last_name	#=> "Magic!"
-@bob.birthday	#=> #<Date: 4908497/2,0,2299161>
+    @bob = User.find(@bob.id)
+    @bob.first_name	#=> "Bob"
+    @bob.last_name	#=> "Magic!"
+    @bob.birthday	#=> #<Date: 4908497/2,0,2299161>
 
 Inherit Template Columns
 ========================
-A child can "inherit" magic columns from its parent.  You can use container models to provide a 
-column template for contained objects.  For example, an Account has_magic_columns and 
-has_many :people.  A Person inherits magic columns from its account:
 
-class Person < ActiveRecord::Base
-  belongs_to :account
-  has_magic_columns :inherit => :account
-end
+A child can inherit magic columns from its parent. You can use container models
+to provide a column template for contained objects. For example:
 
-Children people now all share the columns of their parent account.  You don't need to use these
-magic columns on the Account of course.  It's just a convenient and logical way to provide column 
-templating.
+    class Account < ActiveRecord::Base
+      has_many :users
+    end
 
-This is really nice in multi-user, multi-account environments where Accounts can "customize" 
-model attributes.
+    class User < ActiveRecord::Base
+      belongs_to :account
+      has_magic_columns :inherit => :account
+    end
 
+All Users on a given account will thus inherit the same magic columns.
 
-Copyright (c) 2007 Brandon Keene <bkeene AT gmail DOT com>
+To Do
+=====
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This gem is not functional yet. Here's a short list of things that need to be
+done to polish it up:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+* Find and fix unsupported Rails 2 code
+* Add gemspec
+* Test
+* Flesh out README with examples of how to use inherited magic columns
+* Benchmark and optimize
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+Maintainers
+===========
 
+* Drew Ulmer (github.com/latortuga)
+* Nicholas Zielinski (github.com/zieski)
+
+Contribute
+==========
+See github.com/latortuga/has_magic_columns/CONTRIBUTORS.md
