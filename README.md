@@ -19,9 +19,9 @@ Add to your Gemfile:
 
 Create the migrations for MagicColumns and migrate:
 
-    rake has_magic_columns:db:create
+    rails g has_magic_columns:install
     rake db:migrate
-  
+
 Usage
 =====
 
@@ -84,9 +84,9 @@ done to polish it up:
 Maintainers
 ===========
 
-* Drew Ulmer (github.com/latortuga)
-* Nicholas Zielinski (github.com/zieski)
+* Drew Ulmer ([latortuga](http://github.com/latortuga))
+* Nicholas Zielinski [[zieski](http://github.com/zieski))
 
 Contribute
 ==========
-See github.com/latortuga/has_magic_columns/CONTRIBUTORS.md
+See the [CONTRIBUTORS guide](http://github.com/latortuga/has_magic_columns/CONTRIBUTORS.md).
