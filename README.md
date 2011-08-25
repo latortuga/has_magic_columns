@@ -6,8 +6,8 @@ or per-parent-model basis. This is useful for situations where custom fields are
 required for a specific model or for multi-user, multi-account environments where
 accounts can customize attributes for subordinate models.
 
-NOTE: This plugin is in a transitional state. It was originally a Rails 2
-plugin written by Brandon Keene and is being update to a gem with Rails 3
+**NOTE**: This plugin is not production-ready. It was originally a Rails 2
+plugin written by Brandon Keene and is being updated to a gem with Rails 3
 support.
 
 Installation
@@ -24,6 +24,8 @@ Create the migrations for MagicColumns and migrate:
 
 Usage
 =====
+
+## Model
 
 Add has_magic_columns to your model of choice.
 
@@ -52,8 +54,7 @@ Find @bob and inspect him
     @bob.last_name	#=> "Magic!"
     @bob.birthday	#=> #<Date: 4908497/2,0,2299161>
 
-Inherit Template Columns
-========================
+## Inherited Model
 
 A child can inherit magic columns from its parent. You can use container models
 to provide a column template for contained objects. For example:
@@ -85,7 +86,7 @@ Maintainers
 ===========
 
 * Drew Ulmer ([latortuga](http://github.com/latortuga))
-* Nicholas Zielinski [[zieski](http://github.com/zieski))
+* Nicholas Zielinski ([zieski](http://github.com/zieski))
 
 Contribute
 ==========
