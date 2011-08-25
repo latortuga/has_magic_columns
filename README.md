@@ -90,4 +90,4 @@ Maintainers
 
 Contribute
 ==========
-See the [CONTRIBUTORS guide](http://github.com/latortuga/has_magic_columns/CONTRIBUTORS.md).
+See the [CONTRIBUTORS guide](https://github.com/latortuga/has_magic_columns/blob/master/CONTRIBUTORS.md).
