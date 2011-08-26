@@ -21,10 +21,9 @@ module HasMagicColumns #:nodoc:
         
         # Inheritence
         cattr_accessor :inherited_from
-        unless self.inherited_from = options[:inherit]
-          has_many :magic_column_relationships, :as => :owner, :dependent => :destroy
-          has_many :magic_columns, :through => :magic_column_relationships, :dependent => :destroy
-        else
+
+        # if options[:through] is supplied, treat as an inherited relationship
+        if self.inherited_from = options[:through]
           class_eval do
             def inherited_magic_columns
               raise "Cannot inherit MagicColumns from a non-existant association: #{@inherited_from}" unless self.class.method_defined?(inherited_from)# and self.send(inherited_from)
@@ -32,6 +31,11 @@ module HasMagicColumns #:nodoc:
             end
           end
           alias_method :magic_columns, :inherited_magic_columns unless method_defined? :magic_columns
+
+        # otherwise the calling model has the relationships
+        else
+          has_many :magic_column_relationships, :as => :owner, :dependent => :destroy
+          has_many :magic_columns, :through => :magic_column_relationships, :dependent => :destroy
         end
         
         # Hook into Base
