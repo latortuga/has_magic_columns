@@ -56,8 +56,7 @@ Find @bob and inspect him
 
 ## Inherited Model
 
-A child can inherit magic columns from its parent. You can use container models
-to provide a column template for contained objects. For example:
+A child can inherit magic columns from a parent.
 
     class Account < ActiveRecord::Base
       has_many :users
@@ -65,10 +64,33 @@ to provide a column template for contained objects. For example:
 
     class User < ActiveRecord::Base
       belongs_to :account
-      has_magic_columns :inherit => :account
+      has_magic_columns :through => :account
     end
 
-All Users on a given account will thus inherit the same magic columns.
+To see all the magic columns available for a child from its parent:
+
+    @user.magic_columns #=> [#<MagicColumn>,...]
+
+or
+
+    @user.account.magic_columns #=> [#<MagicColumn>,...]
+
+To add magic columns, go through the parent or child:
+
+    @user.magic_columns << MagicColumn.create(...)
+    @user.account.magic_columns << MagicColumn.create(...)
+
+All children for a given parent will have access to the same magic columns:
+
+    @account = Account.create(:name => "BobCorp")
+
+    @bob = User.create(:name => "bob", :account => @account)
+    @bob.magic_columns << MagicColumn.create(:name => "salary")
+    @bob.salary = "40000"
+
+    @steve = User.create(:name => "bob", :account => @account)
+    # no need to add the column again
+    @steve.salary = "50000"
 
 To Do
 =====
@@ -77,7 +99,6 @@ This gem is not functional yet. Here's a short list of things that need to be
 done to polish it up:
 
 * Find and fix unsupported Rails 2 code
-* Add gemspec
 * Test
 * Flesh out README with examples of how to use inherited magic columns
 * Benchmark and optimize
