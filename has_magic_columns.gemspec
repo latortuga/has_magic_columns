@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
-#lib = File.expand_path('../lib/', __FILE__)
-$:.push File.expand_path("../lib", __FILE__) #lib unless $:.include?(lib)
+$:.push File.expand_path("../lib", __FILE__)
 require 'has_magic_columns/version'
 
 Gem::Specification.new do |s|
