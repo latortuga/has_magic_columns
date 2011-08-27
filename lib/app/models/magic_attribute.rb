@@ -2,12 +2,14 @@
 class MagicAttribute < ActiveRecord::Base
   belongs_to :magic_column
   belongs_to :magic_option
+
+  before_save :update_magic
   
   def to_s
     (magic_option) ? magic_option.value : value
   end
   
-  def before_save
+  def update_magic
     if option = find_magic_option_for(value)
       unless magic_option and magic_option == option
         self.value = nil
