@@ -65,6 +65,18 @@ module HasMagicColumns #:nodoc:
       reload_without_magic
     end
 
+    def update_attributes(new_attributes)
+      attributes = new_attributes.stringify_keys
+      magic_attrs = magic_columns.map(&:name)
+
+      super(attributes.select{ |k, v| !magic_attrs.include?(k) })
+      attributes.select{ |k, v| magic_attrs.include?(k) }.each do |k, v|
+        col = find_magic_column_by_name(k)
+        attr = find_magic_attribute_by_column(col).first
+        attr.update_attributes(:value => v)
+      end
+    end
+
     private
     
     # Save MagicAttributes from @attributes
