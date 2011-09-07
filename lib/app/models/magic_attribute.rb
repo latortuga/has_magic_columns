@@ -24,6 +24,6 @@ private
 
   def find_magic_option_for(value)
     magic_column.magic_options.find(:first,
-      :conditions => ["value = ? or synonym = ?", value, value])
+      :conditions => ["value = ? or synonym = ?", value, value]) unless magic_column.nil? or magic_column.magic_options.nil?
   end
 end
