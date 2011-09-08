@@ -1,7 +1,3 @@
-require 'has_magic_columns/has_magic_columns'
-require 'has_magic_columns/version'
-require 'has_magic_columns/railtie' if defined?(Rails)
-
 # Has Magic Columns
 #
 # Copyright (c) 2007 Brandon Keene <bkeene AT gmail DOT com>
@@ -20,5 +16,13 @@ require 'has_magic_columns/railtie' if defined?(Rails)
 # @model = Model.find(1)
 # @model.first_name #=> "Brandon"
 module HasMagicColumns # :nodoc:
+end
+
+require 'has_magic_columns/version'
+
+if defined? Rails::Railtie
+  require 'has_magic_columns/railtie'
+elsif defined? Rails::Initializer
+  $stderr.puts "\nhas_magic_columns is not compatible with Rails 2, use at your own risk.\n\n"
 end
 
