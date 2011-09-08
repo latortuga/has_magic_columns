@@ -19,7 +19,8 @@ task :default => :spec
 
 desc 'Run specs'
 RSpec::Core::RakeTask.new(:spec) do |t|
-  t.pattern = 'spec/**/*_spec.rb' #finders/active_record_spec.rb' if ENV['DB'] and ENV['DB'] != 'sqlite3'
+  t.pattern = 'spec/**/*_spec.rb'
+  t.ruby_opts = "-Ilib:spec"
 end
 
 namespace :spec do
