@@ -119,3 +119,9 @@ Maintainers
 Contribute
 ==========
 See the [CONTRIBUTORS guide](https://github.com/latortuga/has_magic_columns/blob/master/CONTRIBUTORS.md).
+
+Credits
+=======
+
+Thank you to Brandon Keene for his original work making this plugin.
+Thank you to the [will_paginate](https://github.com/mislav/will_paginate) gem for iinspiration and code examples for how to test a Rails plugin.
