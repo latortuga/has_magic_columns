@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.date = Date.today
 
   s.files = `git ls-files`.split("\n")
-  s.test_files = `git ls-files -- {test,spec,features}/`.split("\n")
+  s.test_files = `git ls-files -- spec/`.split("\n")
   s.require_paths = ["lib"]
 
   s.add_dependency("activesupport", ["~> 3.0"])
