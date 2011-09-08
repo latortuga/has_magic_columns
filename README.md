@@ -30,37 +30,37 @@ Usage
 
 Sprinkle a little magic into an existing model:
 
-    class User < ActiveRecord::Base
+    class Person < ActiveRecord::Base
       has_magic_columns
     end
 
 Add magic columns to your model:
 
-    @bob = User.create(:email => "bob@example.com")
-    @bob.magic_columns.create(:name => "first_name")
+    @charlie = Person.create(:email => "charlie@example.com")
+    @charlie.magic_columns.create(:name => "first_name")
 
 Supply additional options if you have more specific requirements for your columns:
 
-    @bob.magic_columns.create(:name => "last_name", :is_required => true)
-    @bob.magic_columns.create(:name => "birthday", :datatype => :date)
-    @bob.magic_columns.create(:name => "salary", :default => "40000", :pretty_name => "Yearly Salary")
+    @charlie.magic_columns.create(:name => "last_name", :is_required => true)
+    @charlie.magic_columns.create(:name => "birthday", :datatype => :date)
+    @charlie.magic_columns.create(:name => "salary", :default => "40000", :pretty_name => "Yearly Salary")
 
 The :datatype option supports :check_box_boolean, :date, :datetime, or :integer.
 
 Use your new columns just like you would with any other ActiveRecord attribute:
 
-    @bob.first_name = "Bob"
-    @bob.last_name = "Magic!"
-    @bob.birthday = Date.today
-    @bob.save
+    @charlie.first_name = "Charlie"
+    @charlie.last_name = "Magic!"
+    @charlie.birthday = Date.today
+    @charlie.save
 
-Find @bob and inspect him:
+Find @charlie and inspect him:
 
-    @bob = User.find(@bob.id)
-    @bob.first_name	#=> "Bob"
-    @bob.last_name	#=> "Magic!"
-    @bob.birthday	#=> #<Date: 4908497/2,0,2299161>
-    @bob.salary     #=> "40000", this is from :salary having a :default
+    @charlie = User.find(@charlie.id)
+    @charlie.first_name	#=> "Charlie"
+    @charlie.last_name	#=> "Magic!"
+    @charlie.birthday	#=> #<Date: 4908497/2,0,2299161>
+    @charlie.salary     #=> "40000", this is from :salary having a :default
 
 ## Inherited Model
 
@@ -71,6 +71,7 @@ as having magic columns:
       has_many :users
       has_magic_columns
     end
+    @account = Account.create(:name => "BobCorp")
 
 And declare the child as having magic columns :through the parent.
 
@@ -78,36 +79,34 @@ And declare the child as having magic columns :through the parent.
       belongs_to :account
       has_magic_columns :through => :account
     end
+    @alice = User.create(:name => "alice", :account => @account)
 
 To see all the magic columns available for a child from its parent:
 
-    @user.magic_columns #=> [#<MagicColumn>,...]
-    @user.account.magic_columns #=> [#<MagicColumn>,...]
+    @alice.magic_columns #=> [#<MagicColumn>,...]
+    @account.magic_columns #=> [#<MagicColumn>,...]
+    @alice.account.magic_columns #=> [#<MagicColumn>,...]
 
 To add magic columns, go through the parent or child:
 
-    @user.magic_columns.create(...)
-    @user.account.magic_columns.create(...)
+    @alice.magic_columns.create(...)
+    @account.magic_columns.create(...)
 
 All children for a given parent will have access to the same magic columns:
 
-    @account = Account.create(:name => "BobCorp")
+    @alice.magic_columns.create(:name => "salary")
+    @alice.salary = "40000"
 
     @bob = User.create(:name => "bob", :account => @account)
-    @bob.magic_columns.create(:name => "salary")
-    @bob.salary = "40000"
-
-    @steve = User.create(:name => "bob", :account => @account)
-    # no need to add the column again
-    @steve.salary = "50000"
+    # Magic! No need to add the column again!
+    @bob.salary = "50000"
 
 To Do
 =====
 
-This gem is mostly functional. Here's a short list of things that need to be
-done to polish it up:
+Here's a short list of things that need to be done to polish up this gem:
 
-* Test
+* Test other parts of the data model (e.g. magic_attributes, magic_options)
 * Benchmark and optimize
 
 Maintainers
@@ -119,3 +118,9 @@ Maintainers
 Contribute
 ==========
 See the [CONTRIBUTORS guide](https://github.com/latortuga/has_magic_columns/blob/master/CONTRIBUTORS.md).
+
+Credits
+=======
+
+* Thank you to Brandon Keene for his original work making this plugin.
+* Thank you to the [will_paginate](https://github.com/mislav/will_paginate) gem for iinspiration and code examples for how to test a Rails plugin.

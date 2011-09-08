@@ -1,1 +1,5 @@
-ActiveRecord::Base.send :include, Has::Magic::Columns
+require 'has_magic_columns'
+
+if defined? ActiveRecord::Base
+  require 'has_magic_columns/active_record'
+end
