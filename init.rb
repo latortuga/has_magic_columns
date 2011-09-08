@@ -1,1 +1,1 @@
-ActiveRecord::Base.send :include, Has::Magic::Columns
+ActiveRecord::Base.send :include, HasMagicColumns
