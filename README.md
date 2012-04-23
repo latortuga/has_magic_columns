@@ -30,76 +30,96 @@ Usage
 
 Sprinkle a little magic into an existing model:
 
-    class Person < ActiveRecord::Base
-      has_magic_columns
-    end
+```ruby
+class Person < ActiveRecord::Base
+  has_magic_columns
+end
+```
 
 Add magic columns to your model:
 
-    @charlie = Person.create(:email => "charlie@example.com")
-    @charlie.magic_columns.create(:name => "first_name")
+```ruby
+@charlie = Person.create(:email => "charlie@example.com")
+@charlie.magic_columns.create(:name => "first_name")
+```
 
 Supply additional options if you have more specific requirements for your columns:
 
-    @charlie.magic_columns.create(:name => "last_name", :is_required => true)
-    @charlie.magic_columns.create(:name => "birthday", :datatype => :date)
-    @charlie.magic_columns.create(:name => "salary", :default => "40000", :pretty_name => "Yearly Salary")
+```ruby
+@charlie.magic_columns.create(:name => "last_name", :is_required => true)
+@charlie.magic_columns.create(:name => "birthday", :datatype => :date)
+@charlie.magic_columns.create(:name => "salary", :default => "40000", :pretty_name => "Yearly Salary")
+```
 
-The :datatype option supports :check_box_boolean, :date, :datetime, or :integer.
+The `:datatype` option supports: `:check_box_boolean`, `:date`, `:datetime`, `:integer`
 
 Use your new columns just like you would with any other ActiveRecord attribute:
 
-    @charlie.first_name = "Charlie"
-    @charlie.last_name = "Magic!"
-    @charlie.birthday = Date.today
-    @charlie.save
+```ruby
+@charlie.first_name = "Charlie"
+@charlie.last_name = "Magic!"
+@charlie.birthday = Date.today
+@charlie.save
+```
 
 Find @charlie and inspect him:
 
-    @charlie = User.find(@charlie.id)
-    @charlie.first_name	#=> "Charlie"
-    @charlie.last_name	#=> "Magic!"
-    @charlie.birthday	#=> #<Date: 4908497/2,0,2299161>
-    @charlie.salary     #=> "40000", this is from :salary having a :default
+```ruby
+@charlie = User.find(@charlie.id)
+@charlie.first_name	#=> "Charlie"
+@charlie.last_name	#=> "Magic!"
+@charlie.birthday	#=> #<Date: 4908497/2,0,2299161>
+@charlie.salary     #=> "40000", this is from :salary having a :default
+```
 
 ## Inherited Model
 
 A child can inherit magic columns from a parent. To do this, declare the parent
 as having magic columns:
 
-    class Account < ActiveRecord::Base
-      has_many :users
-      has_magic_columns
-    end
-    @account = Account.create(:name => "BobCorp")
+```ruby
+class Account < ActiveRecord::Base
+  has_many :users
+  has_magic_columns
+end
+@account = Account.create(:name => "BobCorp")
+```
 
 And declare the child as having magic columns :through the parent.
 
-    class User < ActiveRecord::Base
-      belongs_to :account
-      has_magic_columns :through => :account
-    end
-    @alice = User.create(:name => "alice", :account => @account)
+```ruby
+class User < ActiveRecord::Base
+  belongs_to :account
+  has_magic_columns :through => :account
+end
+@alice = User.create(:name => "alice", :account => @account)
+```
 
 To see all the magic columns available for a child from its parent:
 
-    @alice.magic_columns #=> [#<MagicColumn>,...]
-    @account.magic_columns #=> [#<MagicColumn>,...]
-    @alice.account.magic_columns #=> [#<MagicColumn>,...]
+```ruby
+@alice.magic_columns #=> [#<MagicColumn>,...]
+@account.magic_columns #=> [#<MagicColumn>,...]
+@alice.account.magic_columns #=> [#<MagicColumn>,...]
+```
 
 To add magic columns, go through the parent or child:
 
-    @alice.magic_columns.create(...)
-    @account.magic_columns.create(...)
+```ruby
+@alice.magic_columns.create(...)
+@account.magic_columns.create(...)
+```
 
 All children for a given parent will have access to the same magic columns:
 
-    @alice.magic_columns.create(:name => "salary")
-    @alice.salary = "40000"
+```ruby
+@alice.magic_columns.create(:name => "salary")
+@alice.salary = "40000"
 
-    @bob = User.create(:name => "bob", :account => @account)
-    # Magic! No need to add the column again!
-    @bob.salary = "50000"
+@bob = User.create(:name => "bob", :account => @account)
+# Magic! No need to add the column again!
+@bob.salary = "50000"
+```
 
 To Do
 =====
