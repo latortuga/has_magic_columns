@@ -1,6 +1,8 @@
 has_magic_columns
 ===============
 
+[![Gem Version](https://badge.fury.io/rb/has_magic_columns.png)](http://badge.fury.io/rb/has_magic_columns)
+
 Allows the addition of custom "magic" columns and attributes on a per-model
 or per-parent-model basis. This is useful for situations where custom fields are
 required for a specific model or for multi-user, multi-account environments where
